@@ -70,9 +70,6 @@
 }
 
 .more-options-button {
-    position: absolute;
-    top: 4px;
-    right: 4px;
     background-color: #eeeeee;
     font-size: 1rem;
     width: 32px;
@@ -87,4 +84,35 @@
 
 .link-button:hover .more-options-button {
     display: block;
+}
+
+.more-options-container {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+}
+
+.options-menu {
+    position: absolute;
+    top: 36px;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+}
+
+.options-menu-item {
+    display: block;
+    padding: 8px 16px;
+    width: 100%;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+}
+
+.options-menu-item:hover {
+    background-color: #f0f0f0;
 }
