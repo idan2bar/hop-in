@@ -1,0 +1,13 @@
+﻿.counter {
+    font-size: 20px;
+    color: blue;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.counter button {
+    background-color: lightblue;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
+}
