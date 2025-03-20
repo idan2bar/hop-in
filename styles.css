@@ -1,13 +1,51 @@
-﻿.counter {
-    font-size: 20px;
-    color: blue;
-    padding: 10px;
-    border: 1px solid black;
+﻿body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-.counter button {
-    background-color: lightblue;
-    padding: 5px;
+.page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.navbar {
+    background-color: #eeeeee;
+    padding: 8px 32px;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.link-buttons-container {
+    display: flex;
+}
+
+.link-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
     border: none;
+    border-radius: 8px;
+    width: 120px;
+    background-color: transparent;
+    transition: background-color 0.2s;
     cursor: pointer;
+}
+
+.link-button:hover {
+    background-color: #eeeeee;
+}
+
+.icon {
+    width: 36px;
+    height: 36px;
+    margin: 8px;
 }
