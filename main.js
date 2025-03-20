@@ -33,12 +33,35 @@ const Content = () => div(
 const LinkButtons = () => div(
     { class: "link-buttons-container" },
     links.map(({ name, url }) =>
-        button(
-            {class: "link-button", onclick: () => window.location.href = url},
-            img({src: GetFaviconUrl(url), alt: `${name} icon`, class: "icon"}),
-            name
-        )
+        LinkButton(name, url)
     )
 )
+
+const LinkButton = (name, url) => {
+    return div(
+        {class: "link-button"},
+        LinkButtonBody(url, name),
+        LinkMoreOptionsButton()
+    );
+}
+
+const LinkButtonBody = (url, name) =>
+    button(
+        {class: "link-button-body", onclick: () => window.location.href = url},
+        img({src: GetFaviconUrl(url), alt: `${name} icon`, class: "icon"}),
+        name
+    )
+
+const LinkMoreOptionsButton = () =>
+    button(
+        {
+            class: "more-options-button",
+            onclick: (e) => {
+                e.stopPropagation();
+                alert('More options clicked');
+            }
+        },
+        "⋮"
+    )
 
 add(document.body, Page());
