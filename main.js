@@ -20,10 +20,8 @@ const normalizeUrl = (url) => {
     return url;
 };
 
-const GetFaviconUrl = (url, size = 64) => {
-    const hostname = new URL(url).hostname;
-    return `https://favicon.yandex.net/favicon/${hostname}`;
-};
+const GetFaviconUrl = (url, size = 64) =>
+    `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}&sz=${size}`;
 
 const Page = () =>
     div(
