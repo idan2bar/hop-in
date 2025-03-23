@@ -82,7 +82,7 @@ const PromptAddingLink = () => {
     const name = prompt("Enter name:");
     if (name === null) return;
 
-    const url = prompt("Enter URL:");
+    const url = normalizeUrl(prompt("Enter URL:"));
     if (url === null) return;
 
     addLink(name, url);
