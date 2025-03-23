@@ -2,15 +2,34 @@ import van from "./van-1.5.3.min.js";
 
 const {div, button, img, h2} = van.tags;
 
-const links = van.state([
+const DEFAULT_LINKS = [
     {name: "Google", url: "https://www.google.com/"},
     {name: "Facebook", url: "https://www.facebook.com/"},
     {name: "X", url: "https://x.com/"},
-])
+];
+
+const loadLinks = () => {
+    const links = localStorage.getItem("links");
+
+    return links ? JSON.parse(links) : DEFAULT_LINKS;
+}
+
+const links = van.state(loadLinks());
 
 const updateLinks = (func) => {
     func();
     links.val = [...links.val];
+    localStorage.setItem('links', JSON.stringify(links.val));
+}
+
+const addLink = (name, url) => {
+    links.val = [...links.val, {name, url}];
+    localStorage.setItem('links', JSON.stringify(links.val));
+}
+
+const deleteLink = (link) => {
+    links.val = links.val.filter(l => l !== link);
+    localStorage.setItem('links', JSON.stringify(links.val));
 }
 
 const normalizeUrl = (url) => {
@@ -66,7 +85,7 @@ const PromptAddingLink = () => {
     const url = prompt("Enter URL:");
     if (url === null) return;
 
-    links.val = [...links.val, {name, url}];
+    addLink(name, url);
 }
 
 const LinkButton = (link) => {
@@ -127,7 +146,7 @@ const OptionsMenu = (link) =>
         OptionsMenuItem("Change URL",
             {onclick: () => updateLinks(() => link.url = normalizeUrl(PromptForUpdateValue("Enter new URL:", link.url)))}),
         OptionsMenuItem("Delete",
-            {onclick: () => links.val = links.val.filter(l => l !== link)}),
+            {onclick: () => deleteLink(link)}),
     );
 
 const PromptForUpdateValue = (message, defaultValue) =>
