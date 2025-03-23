@@ -58,10 +58,10 @@ const AddLinkButton = () => button(
 const PromptAddingLink = () => {
     const name = prompt("Enter name:");
     if (name === null) return;
-    
+
     const url = prompt("Enter URL:");
     if (url === null) return;
-    
+
     links.val = [...links.val, {name, url}];
 }
 
@@ -83,6 +83,22 @@ const LinkButtonBody = (link) =>
 const LinkMoreOptionsButton = (link) => {
     const showMenu = van.state(false);
 
+    // Handler for clicking outside
+    const closeOptionsMenu = () => {
+        showMenu.val = false;
+        document.removeEventListener('click', closeOptionsMenu);
+    };
+
+    // Add/remove document click listener when menu state changes
+    van.derive(() => {
+        if (showMenu.val) {
+            // Use setTimeout to avoid immediate trigger
+            setTimeout(() => document.addEventListener('click', closeOptionsMenu), 0);
+        } else {
+            document.removeEventListener('click', closeOptionsMenu);
+        }
+    });
+
     return div(
         {class: "more-options-container"},
         button(
@@ -95,32 +111,31 @@ const LinkMoreOptionsButton = (link) => {
             },
             "⋮"
         ),
-        () => showMenu.val ? OptionsMenu(link, showMenu) : div()
+        () => showMenu.val ? OptionsMenu(link) : div()
     );
 };
 
-const OptionsMenu = (link, showMenu) =>
+const OptionsMenu = (link) =>
     div(
         {class: "options-menu"},
-        OptionsMenuItem("Rename", showMenu,
+        OptionsMenuItem("Rename",
             {onclick: () => updateLinks(() => link.name = PromptForUpdateValue("Enter new name:", link.name))}),
-        OptionsMenuItem("Change URL", showMenu,
+        OptionsMenuItem("Change URL",
             {onclick: () => updateLinks(() => link.url = normalizeUrl(PromptForUpdateValue("Enter new URL:", link.url)))}),
-        OptionsMenuItem("Delete", showMenu,
+        OptionsMenuItem("Delete",
             {onclick: () => links.val = links.val.filter(l => l !== link)}),
     );
 
 const PromptForUpdateValue = (message, defaultValue) =>
     prompt(message, defaultValue) ?? defaultValue
 
-const OptionsMenuItem = (label, showMenu, {onclick}) => {
+const OptionsMenuItem = (label, {onclick}) => {
     return button(
         {
             class: "options-menu-item",
             onclick: (e) => {
                 e.stopPropagation();
                 onclick();
-                showMenu.val = false;
             }
         },
         label
