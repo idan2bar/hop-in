@@ -99,7 +99,7 @@ const LinkButton = (link) => {
 const LinkButtonBody = (link) =>
     button(
         {class: "link-button-body", onclick: () => window.location.href = link.url},
-        img({src: () => GetFaviconUrl(link.url), alt: `${link.name} icon`, class: "icon"}),
+        img({src: () => link.iconUrl ?? GetFaviconUrl(link.url), alt: `${link.name} icon`, class: "icon"}),
         link.name
     )
 
@@ -145,12 +145,21 @@ const OptionsMenu = (link) =>
             {onclick: () => updateLinks(() => link.name = PromptForUpdateValue("Enter new name:", link.name))}),
         OptionsMenuItem("Change URL",
             {onclick: () => updateLinks(() => link.url = normalizeUrl(PromptForUpdateValue("Enter new URL:", link.url)))}),
+        OptionsMenuItem("Change Icon",
+            {onclick: () => updateLinks(() => PromptForNewIconUrl(link))}),
         OptionsMenuItem("Delete",
             {onclick: () => deleteLink(link)}),
     );
 
 const PromptForUpdateValue = (message, defaultValue) =>
     prompt(message, defaultValue) ?? defaultValue
+
+const PromptForNewIconUrl = (link) =>
+{
+    const newIconUrl = PromptForUpdateValue("Enter new icon URL:", link.iconUrl);
+    
+    link.iconUrl = newIconUrl ? normalizeUrl(newIconUrl) : undefined;
+}
 
 const OptionsMenuItem = (label, {onclick}) => {
     return button(

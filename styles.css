@@ -90,6 +90,7 @@
     width: 36px;
     height: 36px;
     margin: 8px;
+    object-fit: contain;
 }
 
 .more-options-button {
