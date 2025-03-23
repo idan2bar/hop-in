@@ -52,13 +52,20 @@ const LinkButtons = (links) => div(
 const AddLinkButton = () => button(
     {
         class: "link-button-body",
-        onclick: () => links.val = [...links.val, {
-            name: prompt("Enter name:"),
-            url: normalizeUrl(prompt("Enter URL:"))
-        }]
+        onclick: PromptAddingLink
     },
     h2("+")
 )
+
+const PromptAddingLink = () => {
+    const name = prompt("Enter name:");
+    if (name === null) return;
+    
+    const url = prompt("Enter URL:");
+    if (url === null) return;
+    
+    links.val = [...links.val, {name, url}];
+}
 
 const LinkButton = (link) => {
     return div(
@@ -98,12 +105,15 @@ const OptionsMenu = (link, showMenu) =>
     div(
         {class: "options-menu"},
         OptionsMenuItem("Rename", showMenu,
-            {onclick: () => updateLinks(() => link.name = prompt("Enter new name:", link.name))}),
+            {onclick: () => updateLinks(() => link.name = PromptForUpdateValue("Enter new name:", link.name))}),
         OptionsMenuItem("Change URL", showMenu,
-            {onclick: () => updateLinks(() => link.url = normalizeUrl(prompt("Enter new URL:", link.url)))}),
+            {onclick: () => updateLinks(() => link.url = normalizeUrl(PromptForUpdateValue("Enter new URL:", link.url)))}),
         OptionsMenuItem("Delete", showMenu,
             {onclick: () => links.val = links.val.filter(l => l !== link)}),
     );
+
+const PromptForUpdateValue = (message, defaultValue) =>
+    prompt(message, defaultValue) ?? defaultValue
 
 const OptionsMenuItem = (label, showMenu, {onclick}) => {
     return button(
