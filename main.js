@@ -8,8 +8,22 @@ const links = van.state([
     {name: "X", url: "https://x.com/"},
 ])
 
-const GetFaviconUrl = (url, size = 64) =>
-    `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}&sz=${size}`;
+const updateLinks = (func) => {
+    func();
+    links.val = [...links.val];
+}
+
+const normalizeUrl = (url) => {
+    if (!/^https?:\/\//i.test(url)) {
+        url = "https://" + url;
+    }
+    return url;
+};
+
+const GetFaviconUrl = (url, size = 64) => {
+    const hostname = new URL(url).hostname;
+    return `https://favicon.yandex.net/favicon/${hostname}`;
+};
 
 const Page = () =>
     div(
@@ -38,7 +52,10 @@ const LinkButtons = (links) => div(
 const AddLinkButton = () => button(
     {
         class: "link-button-body",
-        onclick: () => links.val = [...links.val, {name: "New Link", url: "https://example.com/"}]
+        onclick: () => links.val = [...links.val, {
+            name: prompt("Enter name:"),
+            url: normalizeUrl(prompt("Enter URL:"))
+        }]
     },
     h2("+")
 )
@@ -54,7 +71,7 @@ const LinkButton = (link) => {
 const LinkButtonBody = (link) =>
     button(
         {class: "link-button-body", onclick: () => window.location.href = link.url},
-        img({src: GetFaviconUrl(link.url), alt: `${link.name} icon`, class: "icon"}),
+        img({src: () => GetFaviconUrl(link.url), alt: `${link.name} icon`, class: "icon"}),
         link.name
     )
 
@@ -80,9 +97,11 @@ const LinkMoreOptionsButton = (link) => {
 const OptionsMenu = (link, showMenu) =>
     div(
         {class: "options-menu"},
-        OptionsMenuItem("Edit", showMenu, 
-            {onclick: () => alert(`Edit ${link.name}`)}),
-        OptionsMenuItem("Delete", showMenu, 
+        OptionsMenuItem("Rename", showMenu,
+            {onclick: () => updateLinks(() => link.name = prompt("Enter new name:", link.name))}),
+        OptionsMenuItem("Change URL", showMenu,
+            {onclick: () => updateLinks(() => link.url = normalizeUrl(prompt("Enter new URL:", link.url)))}),
+        OptionsMenuItem("Delete", showMenu,
             {onclick: () => links.val = links.val.filter(l => l !== link)}),
     );
 
