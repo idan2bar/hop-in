@@ -52,7 +52,11 @@ const AddLinkButton = () => button(
         class: "link-button-body",
         onclick: PromptAddingLink
     },
-    h2("+")
+    div(
+        {class: "icon-circle"},
+        h2("+")
+    ),
+    "Add Link"
 )
 
 const PromptAddingLink = () => {

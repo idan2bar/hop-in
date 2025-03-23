@@ -2,16 +2,22 @@
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://picsum.photos/id/1039/1920/1080');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: white;
 }
 
 .page {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .navbar {
-    background-color: #eeeeee;
     padding: 8px 32px;
 }
 
@@ -54,13 +60,30 @@
     border: none;
     border-radius: 8px;
     width: 120px;
-    background-color: transparent;
+    background: transparent;
+    backdrop-filter: blur(0px);
     transition: background-color 0.2s;
     cursor: pointer;
+    color: white;
 }
 
 .link-button-body:hover {
-    background-color: #eeeeee;
+    background-color: rgba(255, 255, 255, 0.1);
+    outline: rgba(255, 255, 255, 0.2) 2px solid;
+    backdrop-filter: blur(5px);
+}
+
+.icon-circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    margin: 8px;
+    border-radius: 50%;
+    background-color: rgba(30, 30, 30, 0.5);
+    outline: rgba(255, 255, 255, 0.5) 2px dashed;
+    backdrop-filter: blur(5px);
 }
 
 .icon {
@@ -70,7 +93,8 @@
 }
 
 .more-options-button {
-    background-color: #eeeeee;
+    background-color: transparent;
+    color: white;
     font-size: 1rem;
     width: 32px;
     height: 32px;
@@ -86,6 +110,11 @@
     display: block;
 }
 
+.more-options-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+}
+
 .more-options-container {
     position: absolute;
     top: 4px;
@@ -96,8 +125,10 @@
     position: absolute;
     top: 36px;
     right: 0;
-    background-color: white;
-    border: 1px solid #ccc;
+    white-space: nowrap;
+    background: rgba(30, 30, 30, 0.1);
+    backdrop-filter: blur(10px);
+    outline: rgba(255, 255, 255, 0.1) 2px solid;
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     z-index: 1000;
@@ -109,10 +140,11 @@
     width: 100%;
     border: none;
     background: none;
+    color: white;
     text-align: left;
     cursor: pointer;
 }
 
 .options-menu-item:hover {
-    background-color: #f0f0f0;
+    background-color: rgba(255, 255, 255, 0.1);
 }
